@@ -17,7 +17,7 @@ CREATE TABLE products(
 
 CREATE TABLE users(
     id                  serial,
-    username            VARCHAR(50) NOT NULL,
+    username            VARCHAR(50) NOT NULL UNIQUE,
     password            CHAR(80) NOT NULL,
     first_name          VARCHAR(50) NOT NULL,
     last_name           VARCHAR(50) NOT NULL,
@@ -39,6 +39,14 @@ CREATE TABLE users_roles(
    CONSTRAINT FK_USER_ID_01 FOREIGN KEY (user_id) REFERENCES users (id),
    CONSTRAINT FK_ROLE_ID FOREIGN KEY (role_id) REFERENCES roles (id)
 );
+
+/*CREATE TABLE roles (
+   user_id   INT NOT NULL,
+   role varchar(50) NOT NULL,
+
+   PRIMARY KEY (user_id , role),
+   CONSTRAINT fk_roles FOREIGN KEY (user_id) REFERENCES users (id)
+);*/
 
 CREATE TABLE orders_statuses(
     id                  serial,
