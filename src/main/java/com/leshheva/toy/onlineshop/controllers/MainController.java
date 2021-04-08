@@ -4,6 +4,7 @@ import com.leshheva.toy.onlineshop.entities.Product;
 import com.leshheva.toy.onlineshop.service.CategoryService;
 import com.leshheva.toy.onlineshop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,15 +41,7 @@ public class MainController {
         return "category";
     }
 
-    @GetMapping("/category/{id}")
-    public  String showProductsInCategory(Model model, @PathVariable(value="id")Long id){
-        model.addAttribute("products", productService.getListOfProductsCurrCategory(id));
-        for (Product product:productService.getListOfProductsCurrCategory(id)
-             ) {
-            System.out.println(product.getTitle() +" "+product.getTitle());
-        }
-        return "product-page";
-    }
+
 
 
 

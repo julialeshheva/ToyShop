@@ -32,7 +32,7 @@
         <tr th:each="category : ${categories}">
             <td th:text="${category.id}"/>
             <td >
-                <a th:text="${category.title}" th:href="@{'/toyshop/category/' + ${category.id}}" />
+                <a th:text="${category.title}" th:href="@{'/toys/category/' + ${category.id}}" />
             </td>
         </tr>
         </tbody>

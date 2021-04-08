@@ -19,6 +19,16 @@
 <div th:replace="~{navigation :: navi(Shop)}"/>
 
 <div class="container">
+    <h1 th:text="Фильтры" />
+
+    <form th:action="@{/shop}" method="get">
+        <input th:value="${word != null} ? ${word}" th:name="word" type="text" placeholder="Название">
+        <input th:value="${min != null} ? ${min}" th:name="min" type="number" placeholder="Минимальная цена">
+        <input th:value="${max != null} ? ${max}" th:name="max" type="number" placeholder="Максимальная цена">
+        <button type="submit" class="btn btn-primary">Фильтровать</button>
+    </form>
+
+    <br>
 
     <table class="table table-hover">
         <thead>
@@ -35,7 +45,7 @@
             <td th:text="${product.id}"/>
 
             <td >
-                <a th:text="${product.title}" th:href="@{'/toyshop/product_description/' + ${product.id}}" />
+                <a th:text="${product.title}" th:href="@{'/toys/' + ${product.id}}" />
             </td>
 
             <td >
