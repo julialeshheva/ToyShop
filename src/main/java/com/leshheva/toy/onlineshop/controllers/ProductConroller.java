@@ -12,11 +12,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Controller
 @RequestMapping("/toys")
 public class ProductConroller {
 
     private ProductService productService;
+
     @Autowired
     public void setProductService(ProductService productService) {
         this.productService = productService;
@@ -28,12 +33,12 @@ public class ProductConroller {
         return "product-page";
     }
     @GetMapping("/category/{id}")
-    public  String showProductsInCategory(Model model, @PathVariable(value="id")Long id
-/*                                          @RequestParam(value = "word", required = false) String word,
+    public  String showProductsInCategory(Model model, @PathVariable(value="id")Long id, HttpServletRequest httpServletRequest,
+                                          @RequestParam(value = "word", required = false) String word,
                                           @RequestParam(value = "min", required = false) Double min,
-                                          @RequestParam(value = "max", required = false) Double max*/){
+                                          @RequestParam(value = "max", required = false) Double max){
 
-/*        Specification<Product> spec = Specification.where(null);
+        Specification<Product> spec = Specification.where(null);
         StringBuilder filters = new StringBuilder();
         if (word != null) {
             spec = spec.and(ProductSpecification.titleContains(word));
@@ -48,13 +53,15 @@ public class ProductConroller {
         if (max != null) {
             spec = spec.and(ProductSpecification.priceLesserThanOrEq(max));
             filters.append("&max=" + max);
-        }*/
+        }
         model.addAttribute("products", productService.getListOfProductsCurrCategory(id));
-/*        model.addAttribute("filters", filters.toString());
+        model.addAttribute("filters", filters.toString());
 
         model.addAttribute("min", min);
         model.addAttribute("max", max);
-        model.addAttribute("word", word);*/
+        model.addAttribute("word", word);
+        String referrer = httpServletRequest.getHeader("referer");
+        System.out.println(referrer);
         return "products";
     }
 
