@@ -41,16 +41,26 @@ public class ShoppingCartService {
            orderItem.setItemPrice(product.getPrice());
            orderItem.setTotalPrice(product.getPrice());
            orderItems.add(orderItem);
-           System.out.println(orderItem.getProduct().getTitle());
        }
        else {
            orderItem.setQuantity(orderItem.getQuantity()+1);
            orderItem.setTotalPrice(product.getPrice()*orderItem.getQuantity());
-           for (OrderItem item: orderItems
-                ) {
-               System.out.println(orderItem.getProduct().getTitle()+""+orderItem.getTotalPrice());
-           }
+
        }
+        for (OrderItem item: orderItems
+        ) {
+            System.out.println(item.getProduct().getTitle()+" Total price "+item.getTotalPrice()+" Kolvo " + item.getQuantity());
+        }
+
+    }
+
+    public Double totalOrderPrice(){
+        Double totalPrice = 0.0;
+        for (OrderItem item: orderItems
+        ) {
+           totalPrice += item.getTotalPrice();
+        }
+        return totalPrice;
     }
 
 

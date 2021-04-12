@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping("/shop/cart")
+@RequestMapping("toys/cart")
 public class ShoppingCartController {
 
     private ShoppingCartService shoppingCart;
@@ -23,8 +23,9 @@ public class ShoppingCartController {
 
     @GetMapping
     public String cartPage(Model model) {
-        model.addAttribute("cart", shoppingCart);
-        return "cart-page";
+        model.addAttribute("cart", shoppingCart.getOrderItems());
+        model.addAttribute("totalPrice", shoppingCart.totalOrderPrice());
+        return "cart";
     }
 
     @GetMapping("/add/{id}")
