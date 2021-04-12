@@ -2,29 +2,31 @@ package com.leshheva.toy.onlineshop.controllers;
 
 import com.leshheva.toy.onlineshop.entities.Product;
 import com.leshheva.toy.onlineshop.repositories.specifications.ProductSpecification;
+import com.leshheva.toy.onlineshop.service.CategoryService;
 import com.leshheva.toy.onlineshop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/toys")
 public class ProductConroller {
 
     private ProductService productService;
+    private CategoryService categoryService;
 
     @Autowired
     public void setProductService(ProductService productService) {
         this.productService = productService;
+    }
+
+    @Autowired
+    public void setCategoryService(CategoryService categoryService) {
+        this.categoryService = categoryService;
     }
 
     @GetMapping("/{id}")
@@ -64,6 +66,32 @@ public class ProductConroller {
         System.out.println(referrer);
         return "products";
     }
+
+    @GetMapping("/edit/{id}")
+    public String editProduct(Model model,  @PathVariable(value="id")Long id){
+        model.addAttribute("product",productService.findProductById(id));
+        model.addAttribute("categories",categoryService.getAllCategories());
+        return "edit-product";
+    }
+    @GetMapping("/delete/{id}")
+    public String deleteProduct(Model model,  @PathVariable(value="id")Long id){
+        productService.deleteProductById(id);
+        return "edit-product";
+    }
+    @GetMapping("/add")
+    public String addProduct(Model model){
+        model.addAttribute("product", new Product());
+        model.addAttribute("categories",categoryService.getAllCategories());
+        return "edit-product";
+    }
+
+
+    @PostMapping("/edit")
+    public String showAddCatForm(@ModelAttribute(value = "product")  Product product){
+       productService.saveProduct(product);
+        return "redirect:index";
+    }
+
 
 
 }
