@@ -5,12 +5,18 @@ import com.leshheva.toy.onlineshop.repositories.specifications.ProductSpecificat
 import com.leshheva.toy.onlineshop.service.CategoryService;
 import com.leshheva.toy.onlineshop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/toys")
@@ -18,6 +24,9 @@ public class ProductConroller {
 
     private ProductService productService;
     private CategoryService categoryService;
+
+    @Value("${upload.path}") // Существует ли директория для сохранения файлов. указываем спрингу что хотим получить переменную. Выдергивает из контекста значение
+    private String uploadPath;
 
     @Autowired
     public void setProductService(ProductService productService) {
@@ -75,8 +84,9 @@ public class ProductConroller {
     }
     @GetMapping("/delete/{id}")
     public String deleteProduct(Model model,  @PathVariable(value="id")Long id){
+        Long categoryId = productService.getProduct(id).getCategory().getId();
         productService.deleteProductById(id);
-        return "edit-product";
+        return "redirect:/toys/category/"+categoryId;
     }
     @GetMapping("/add")
     public String addProduct(Model model){
@@ -87,9 +97,37 @@ public class ProductConroller {
 
 
     @PostMapping("/edit")
-    public String showAddCatForm(@ModelAttribute(value = "product")  Product product){
-       productService.saveProduct(product);
-        return "redirect:index";
+    public String showAddCatForm(@ModelAttribute(value = "product")  Product product,
+                                 @RequestParam("file") MultipartFile file){
+
+        String resultFilename = null;
+     if(file != null){
+
+         File uploadDir = new File(uploadPath);
+
+         if (!uploadDir.exists()){
+             System.out.println("mkdir");
+             uploadDir.mkdirs();
+         }
+
+           String uuidFile = UUID.randomUUID().toString(); // создали уникальное имя файла обезапасили от колизий
+           resultFilename = file.getOriginalFilename(); //uuidFile+"."+file.getOriginalFilename();
+
+         try {
+             file.transferTo(new File(uploadPath +"/" + resultFilename));
+         } catch (IOException e) {
+             e.printStackTrace();
+         }
+     }
+        if (resultFilename == null){
+            product.setPath_img(product.getPath_img());
+        }
+        else{
+            product.setPath_img(resultFilename);
+        }
+        productService.saveProduct(product);
+        Long categoryId = product.getCategory().getId();
+        return "redirect:/toys/category/"+categoryId;
     }
 
 

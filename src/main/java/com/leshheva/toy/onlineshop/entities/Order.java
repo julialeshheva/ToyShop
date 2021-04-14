@@ -2,6 +2,7 @@ package com.leshheva.toy.onlineshop.entities;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -15,7 +16,7 @@ import java.util.List;
 public class Order{
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private Long id;
 
@@ -29,6 +30,7 @@ public class Order{
     private String phoneNumber;
 
     @Column(name = "delivery_date")
+    @CreationTimestamp
     private LocalDateTime deliveryDate;
 
     @ManyToOne
@@ -37,5 +39,9 @@ public class Order{
 
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "order", fetch = FetchType.EAGER)
     private List<OrderItem> orderItems;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
 }

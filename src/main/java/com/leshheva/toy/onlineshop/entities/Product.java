@@ -1,10 +1,11 @@
 package com.leshheva.toy.onlineshop.entities;
 
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
+import javax.validation.constraints.*;
 
 @Data
 @NoArgsConstructor
@@ -13,7 +14,7 @@ import java.math.BigDecimal;
 public class Product {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private Long id;
 
@@ -31,5 +32,6 @@ public class Product {
 
     @ManyToOne
     @JoinColumn(name = "category_id")
+    @NotNull(message = "категория не выбрана")
     private Category category;
 }

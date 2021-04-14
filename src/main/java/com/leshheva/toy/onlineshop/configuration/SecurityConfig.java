@@ -17,10 +17,10 @@ import javax.sql.DataSource;
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private DataSource dataSource;
-    @Autowired
-    public void setDataSource(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
+  //  @Autowired
+  //  public void setDataSource(DataSource dataSource) {
+     //   this.dataSource = dataSource;
+   // }
 
 /*    @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception { // (2)
