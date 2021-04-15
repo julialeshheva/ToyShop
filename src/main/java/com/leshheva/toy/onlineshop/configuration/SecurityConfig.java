@@ -8,6 +8,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
@@ -20,11 +21,6 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-/*    private DataSource dataSource;
-    @Autowired
-    public void setDataSource(DataSource dataSource) {
-       this.dataSource = dataSource;
-    }*/
 
     private UserService userService;
 
@@ -39,28 +35,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider());
     }
-/*    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication().dataSource(dataSource);
-   }*/
 
-        @Override
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/toys/edit/**").hasAnyRole("ADMIN")
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()
-              //  .loginPage("/login")
-            //    .loginProcessingUrl("/authenticateTheUser")
                 .permitAll();
-/*                .antMatchers("/secured/**").hasAnyRole("ADMIN")
-                .and()
-                .formLogin()
-               .loginPage("/login") запрос на доступ к страничкее  с этой формой
-                .loginProcessingUrl("/authenticateTheUser") куда форма пошлет пост запрос, URL которая обработает эти данные
-               .permitAll();*/
+
+
     }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers(
+                "/images/**"
+        );
+    }
+
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -70,7 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
         auth.setUserDetailsService(userService);
-        auth.setPasswordEncoder(passwordEncoder());  // использовать наш userservice для работы с пользователями. Настроили источник наших пользователей
+        auth.setPasswordEncoder(passwordEncoder());
         return auth;
     }
 }
