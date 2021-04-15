@@ -18,12 +18,12 @@ public class Role {
     private Long id;
 
     @Column(name = "name")
-    private String firstName;
+    private String name;
 
-    @ManyToMany
+/*    @ManyToMany
     @JoinTable(name="users_roles",
             joinColumns = @JoinColumn(name = "role_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<Role> users;
+    private List<Role> users;*/
 
 }

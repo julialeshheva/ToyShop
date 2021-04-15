@@ -5,9 +5,9 @@ VALUES (1,'Кукла барби','Очень красивая кула барб
        (1,'Кен','Лучший друг для кулы барби', 500,'toy.jpg'),
        (2,'Мазда','Детская машинка мазда для мальчиков', 1000,'toy.jpg'),
        (2,'Грузовик','Очень юольшой и удобный грузовик', 2000,'toy.jpg');
-INSERT INTO users (username,password,first_name,last_name,email) VALUES ('user1','123','Николай','Басков', 'baskov@mail.ru');
-INSERT INTO users (username,password,first_name,last_name,email) VALUES ('user2','123','Филипп','Киркоров', 'kirkorov@mail.ru');
-INSERT INTO users (username,password,first_name,last_name,email) VALUES ('user3','123','Ольга','Бузова', 'buzova@mail.ru');
+INSERT INTO users (username,password,first_name,last_name,email) VALUES ('user1','$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i','Николай','Басков', 'baskov@mail.ru');
+INSERT INTO users (username,password,first_name,last_name,email) VALUES ('user2','$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i','Филипп','Киркоров', 'kirkorov@mail.ru');
+INSERT INTO users (username,password,first_name,last_name,email) VALUES ('user3','$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i','Ольга','Бузова', 'buzova@mail.ru');
 
 INSERT INTO roles (name)
 VALUES ('ROLE_ADMIN'),
