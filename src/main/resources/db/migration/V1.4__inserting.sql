@@ -10,10 +10,9 @@ INSERT INTO users (username,password,first_name,last_name,email) VALUES ('user2'
 INSERT INTO users (username,password,first_name,last_name,email) VALUES ('user3','$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i','Ольга','Бузова', 'buzova@mail.ru');
 
 INSERT INTO roles (name)
-VALUES ('ROLE_ADMIN'),
-       ('ROLE_USER');
+VALUES ('ADMIN'),
+       ('USER');
 INSERT INTO users_roles (user_id, role_id)
 VALUES (1, 1),
        (2, 2),
-       (1, 2),
        (3, 2);

@@ -1,6 +1,8 @@
 package com.leshheva.toy.onlineshop.controllers;
 
 import com.leshheva.toy.onlineshop.entities.Product;
+import com.leshheva.toy.onlineshop.entities.User;
+import com.leshheva.toy.onlineshop.repositories.UserRepository;
 import com.leshheva.toy.onlineshop.repositories.specifications.ProductSpecification;
 import com.leshheva.toy.onlineshop.service.CategoryService;
 import com.leshheva.toy.onlineshop.service.ProductService;
@@ -16,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.security.Principal;
 import java.util.UUID;
 
 @Controller
@@ -24,6 +27,9 @@ public class ProductConroller {
 
     private ProductService productService;
     private CategoryService categoryService;
+
+    @Autowired
+    private UserRepository userRepository; ///////////////////////////////////////////*/
 
     @Value("${upload.path}") // Существует ли директория для сохранения файлов. указываем спрингу что хотим получить переменную. Выдергивает из контекста значение
     private String uploadPath;
@@ -44,10 +50,16 @@ public class ProductConroller {
         return "product-page";
     }
     @GetMapping("/category/{id}")
-    public  String showProductsInCategory(Model model, @PathVariable(value="id")Long id, HttpServletRequest httpServletRequest,
+    public  String showProductsInCategory(Principal principal,Model model, @PathVariable(value="id")Long id, HttpServletRequest httpServletRequest,
                                           @RequestParam(value = "word", required = false) String word,
                                           @RequestParam(value = "min", required = false) Double min,
                                           @RequestParam(value = "max", required = false) Double max){
+
+        if(principal !=null){
+            User user = userRepository.findUserByUsername(principal.getName());
+            System.out.println(user.getRoles());
+
+        }
 
         Specification<Product> spec = Specification.where(null);
         StringBuilder filters = new StringBuilder();
