@@ -28,8 +28,8 @@ public class ProductConroller {
     private ProductService productService;
     private CategoryService categoryService;
 
-    @Autowired
-    private UserRepository userRepository; ///////////////////////////////////////////*/
+  //  @Autowired
+  //  private UserRepository userRepository; ///////////////////////////////////////////*/
 
     @Value("${upload.path}") // Существует ли директория для сохранения файлов. указываем спрингу что хотим получить переменную. Выдергивает из контекста значение
     private String uploadPath;
@@ -55,11 +55,10 @@ public class ProductConroller {
                                           @RequestParam(value = "min", required = false) Double min,
                                           @RequestParam(value = "max", required = false) Double max){
 
-        if(principal !=null){
+/*        if(principal !=null){
             User user = userRepository.findUserByUsername(principal.getName());
             System.out.println(user.getRoles());
-
-        }
+        }*/
 
         Specification<Product> spec = Specification.where(null);
         StringBuilder filters = new StringBuilder();

@@ -22,6 +22,8 @@ CREATE TABLE users(
     first_name          VARCHAR(50) NOT NULL,
     last_name           VARCHAR(50) NOT NULL,
     email               VARCHAR(50) NOT NULL,
+    delivery_address    VARCHAR(100) NOT NULL,
+    phone_number        VARCHAR(20) NOT NULL,
     PRIMARY KEY (id)
 );
 
@@ -48,7 +50,7 @@ CREATE TABLE users_roles(
    CONSTRAINT fk_roles FOREIGN KEY (user_id) REFERENCES users (id)
 );*/
 
-CREATE TABLE orders_statuses(
+CREATE TABLE statuses(
     id                  serial,
     title               VARCHAR(50) DEFAULT NULL,
     PRIMARY KEY (id)
@@ -58,13 +60,13 @@ CREATE TABLE orders(
    id	                serial,
    user_id              INT NOT NULL,
    status_id            INT NOT NULL,
-   price                DECIMAL(8,2) NOT NULL,
-   delivery_address     VARCHAR(100) NOT NULL,
-   phone_number         VARCHAR(20) NOT NULL,
+/*   price                DECIMAL(8,2) NOT NULL,*/
    delivery_date        TIMESTAMP NOT NULL,
+   create_at            TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+   order_price          DECIMAL(8,2) NOT NULL,
    PRIMARY KEY (id),
    CONSTRAINT FK_USER_ID FOREIGN KEY (user_id) REFERENCES users (id),
-   CONSTRAINT FK_STATUS_ID FOREIGN KEY (status_id) REFERENCES orders_statuses (id)
+   CONSTRAINT FK_STATUS_ID FOREIGN KEY (status_id) REFERENCES statuses (id)
 );
 
 

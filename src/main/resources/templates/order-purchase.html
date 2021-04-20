@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <title>Оформление заказа</title>
+
+    <link rel="icon" type="image/png" th:href="@{/favicon.ico}"/>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/main.js}"></script>
+
+    <link type="text/css" rel="stylesheet" th:href="@{/css/main.css}"/>
+</head>
+
+<body>
+
+<div class="container">
+    <br>
+    <h1>Ваш заказ</h1>
+    <form th:action="@{/order/buy}"  method="post" class="form-horizontal">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Название товара</th>
+                <th>Количество</th>
+                <th>Стоимость</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="orderItem : ${orderItems}">
+                <td th:text="${orderItem.product.title}"/>
+                <td th:text="${orderItem.quantity}"/>
+                <td th:text="${orderItem.getTotalPrice()}"/>
+            </tr>
+            <tr>
+                <td>Итоговая сумма</td>
+                <td/>
+                <td th:text="${totalPrice}"/>
+            </tr>
+            </tbody>
+        </table>
+        <span th:text="'Имя: ' + ${user.firstName}"/>
+        <br>
+        <span th:text="'Фамилия: ' + ${user.last_name}"/>
+        <br>
+        <span th:text="'Номер телефона: ' + ${user.phoneNumber}"/>
+        <br>
+        <span th:text="'Номер телефона: ' + ${user.deliveryAddress}"/>
+        <br>
+        <div class="form-group">
+            <button type="submit" name="addProduct" th:href="@{/order/buy}" class="btn btn-primary btn-block">Оплатить</button>
+        </div>
+    </form>
+<!--    <button class="btn btn-secondary" th:href="@{/demo}">Вернуться на страницу магазина</button>-->
+</div>
+</body>
+</html>

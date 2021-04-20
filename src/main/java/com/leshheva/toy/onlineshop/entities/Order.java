@@ -20,25 +20,25 @@ public class Order{
     @Column(name="id")
     private Long id;
 
-    @Column(name = "price")
-    private BigDecimal price;
-
-    @Column(name = "delivery_address")
-    private String deliveryAddress;
-
-    @Column(name = "phone_number")
-    private String phoneNumber;
+/*    @Column(name = "price")
+    private BigDecimal price;*/
 
     @Column(name = "delivery_date")
-    @CreationTimestamp
     private LocalDateTime deliveryDate;
 
+    @Column(name = "create_at")
+    @CreationTimestamp
+    private LocalDateTime createAt;
+
     @ManyToOne
-    @JoinColumn(name = "status")
+    @JoinColumn(name = "status_id")
     private OrderStatus orderStatus;
 
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "order", fetch = FetchType.EAGER)
     private List<OrderItem> orderItems;
+
+    @Column(name = "order_price")
+    private Double orderPrice;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
