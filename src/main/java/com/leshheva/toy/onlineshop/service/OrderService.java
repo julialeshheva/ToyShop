@@ -45,4 +45,12 @@ public class OrderService {
         }
         orderRepository.save(order);
     }
+
+    public List<Order> findOrderByUserId(User user) {
+        return orderRepository.findAllByUser(user);
+    }
+
+    public Order findOrderById(Long orderId) {
+        return orderRepository.findById(orderId).orElse(null);
+    }
 }

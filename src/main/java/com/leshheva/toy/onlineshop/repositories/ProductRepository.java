@@ -13,4 +13,5 @@ public interface ProductRepository extends JpaRepository<Product,Long>, JpaSpeci
 
     List<Product> findAllByCategory_IdOrderById(Long categoryId);
 
+
 }

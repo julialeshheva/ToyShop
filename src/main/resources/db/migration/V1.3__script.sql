@@ -60,7 +60,6 @@ CREATE TABLE orders(
    id	                serial,
    user_id              INT NOT NULL,
    status_id            INT NOT NULL,
-/*   price                DECIMAL(8,2) NOT NULL,*/
    delivery_date        TIMESTAMP NOT NULL,
    create_at            TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
    order_price          DECIMAL(8,2) NOT NULL,
