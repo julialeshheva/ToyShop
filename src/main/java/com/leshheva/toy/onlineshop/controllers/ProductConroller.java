@@ -108,8 +108,8 @@ public class ProductConroller {
 
 
     @PostMapping("/edit")
-    public String showAddCatForm(@ModelAttribute(value = "product")  Product product,
-                                 @RequestParam("file") MultipartFile file){
+    public String showEditProductForm(@ModelAttribute(value = "product")  Product product,
+                                      @RequestParam("file") MultipartFile file){
 
         String resultFilename = null;
      if(file != null){
