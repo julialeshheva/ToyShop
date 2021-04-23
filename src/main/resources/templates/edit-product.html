@@ -31,16 +31,18 @@
                     <h4 class="card-title mt-2"><span th:text="${product.title == null} ? 'Добавление товара' : 'Изменение товара'"></span></h4>
                 </header>
                 <article class="card-body">
-                    <form th:action="@{/toys/edit}" th:object="${product}" method="post" >
+                    <form th:action="@{/toys/edit}" th:object="${product}" method="post" enctype="multipart/form-data">
                         <input th:field="*{id}" type="hidden" class="form-control">
                         <div class="form-row">
                             <div class="col form-group">
                                 <label>Наименование</label>
                                 <input th:field="*{title}" type="text" class="form-control" placeholder="">
+                                <small class="error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></small>
                             </div>
                             <div class="col form-group">
                                 <label>Цена</label>
                                 <input th:field="*{price}" type="number" class="form-control" placeholder="">
+                                <div style="color:red" th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Name error</div>
                             </div>
                         </div>
 
@@ -62,6 +64,7 @@
                             <div class="col form-group">
                                 <label>Описание товара</label>
                                 <input th:field="*{description}" type="text" class="form-control" th:rows="3" placeholder="">
+                                <small class="error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></small>
                             </div>
                         </div>
 
@@ -74,14 +77,9 @@
                         <div class="form-row">
                             <div class="col form-group">
                                 <label>Картинка</label>
-                                <input type="file" name="file" class="form-control-file" accept="image/*"/>
+                                <input type="file" name="file" class="form-control-file" accept="image/*" />
                             </div>
                         </div>
-
-<!--                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="customFile" name="logo" accept="image/png, image/jpeg"/>
-                            <label class="custom-file-label file-label" for="customFile">Choose logo</label>
-                        </div>-->
 
                         <div class="form-group">
                             <button type="submit" name="addProduct" class="btn btn-primary btn-block">Сохранить</button>

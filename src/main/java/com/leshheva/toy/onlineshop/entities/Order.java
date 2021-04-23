@@ -14,14 +14,10 @@ import java.util.List;
 @Entity
 @Table(name = "orders")
 public class Order{
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private Long id;
-
-/*    @Column(name = "price")
-    private BigDecimal price;*/
 
     @Column(name = "delivery_date")
     private LocalDateTime deliveryDate;
@@ -43,5 +39,4 @@ public class Order{
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-
 }

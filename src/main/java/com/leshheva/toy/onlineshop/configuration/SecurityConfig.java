@@ -23,12 +23,17 @@ import javax.sql.DataSource;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private UserService userService;
+    private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
 
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
     }
 
+    @Autowired
+    public void setCustomAuthenticationSuccessHandler(CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler) {
+        this.customAuthenticationSuccessHandler = customAuthenticationSuccessHandler;
+    }
 
 
     @Override // хотим использовать свой собственный authenticationProvider
@@ -38,14 +43,52 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-              //  .antMatchers("/toys/edit/**").hasAnyRole("ADMIN")
+
+/*        http.httpBasic().and().authorizeRequests().antMatchers("/demo/").permitAll()
+                .and()
+                .authorizeRequests().antMatchers("/toys/edit/**").hasRole("ADMIN")
+                .*/
+
+       /* http.httpBasic().and()
+                .authorizeRequests()
+                .anyRequest().permitAll()
+                .antMatchers("/toys/edit/**").hasRole("ADMIN")
+                .antMatchers("/order/allOrders/").hasRole("ADMIN")
+                .antMatchers("/order/edit/").hasRole("ADMIN")
+             //   .antMatchers("/admin/**").hasRole("ADMIN")
+            //    .antMatchers("/products/**").hasRole("ADMIN")
+*//*                .antMatchers("/order/allOrders/").hasRole("ADMIN")
+                .antMatchers("/order/edit/").hasRole("ADMIN")
+                .antMatchers("/toys/edit/**").hasRole("ADMIN")
+                .anyRequest().permitAll()*//*
+                .and()
+                .formLogin()
+                .loginPage("/login")
+                .loginProcessingUrl("/authenticateTheUser")
+                .successHandler(customAuthenticationSuccessHandler)
+                .permitAll()
+                .and()
+                .logout()
+                .logoutSuccessUrl("/")
+                .permitAll();
+*/
+
+
+       http.authorizeRequests()
+/*                .antMatchers("/toys/edit/**").hasRole("ADMIN")
+                .antMatchers("/order/allOrders").hasRole("ADMIN")
+                .antMatchers("/order/edit").hasRole("ADMIN")*/
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/authenticateTheUser")
-                .permitAll();
+                .successHandler(customAuthenticationSuccessHandler)
+                .permitAll()
+               .and()
+               .logout()
+               .logoutSuccessUrl("/")
+               .permitAll();
 
 
     }

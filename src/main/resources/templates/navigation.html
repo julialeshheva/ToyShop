@@ -42,7 +42,7 @@
                                     <a class="nav-link" th:href="@{/product/edit/0}">Добавить товар</a>
                                 </li>-->
                 <li sec:authorize="isAuthenticated()" class="nav-item"
-                    th:classappend="${activeTab == 'Products' ? 'active' : ''}">
+                    th:classappend="${activeTab == 'MyOrders' ? 'active' : ''}">
                     <a class="nav-link" th:href="@{'/user/orders/' + ${#authentication.getName()}}">Мои заказы</a>
                 </li>
 

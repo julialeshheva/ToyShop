@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderService {
@@ -47,7 +49,7 @@ public class OrderService {
     }
 
     public List<Order> findOrderByUserId(User user) {
-        return orderRepository.findAllByUser(user);
+        return orderRepository.findAllByUserOrderById(user);
     }
 
     public Order findOrderById(Long orderId) {
@@ -55,7 +57,7 @@ public class OrderService {
     }
 
     public List<Order> findAllOrders() {
-        return orderRepository.findAll();
+        return orderRepository.findAllByOrderByIdAsc();
     }
 
     public void saveOrders(List<Order> orders) {

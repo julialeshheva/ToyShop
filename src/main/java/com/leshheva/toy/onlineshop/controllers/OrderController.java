@@ -7,6 +7,7 @@ import com.leshheva.toy.onlineshop.utils.OrderWrapper;
 import lombok.var;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -70,8 +72,10 @@ public class OrderController {
         return "order-purchase";
     }
 
+/*@Secured(value = {"ADMIN"})*/
     @GetMapping("order/allOrders")
     public String showAllOrders(Model model){
+
         model.addAttribute("orders", orderService.findAllOrders());
         return "orders-page";
     }
@@ -82,10 +86,7 @@ public class OrderController {
         List<Order> orders = new ArrayList<>();
         orderService.findAllOrders().iterator().forEachRemaining(orders::add);
         model.addAttribute("wrappedOrders", new OrderWrapper(orders));
-/*        model.addAttribute("orders", orderService.findAllOrders());
-        model.addAttribute("ordersempty", new ArrayList<Order>(orderService.findAllOrders().size()));*/
         model.addAttribute("statuses", orderStatusService.findAllStatuses());
-       // model.addAttribute("statuses", OrderStatus.)
         return "orders-edit";
     }
 

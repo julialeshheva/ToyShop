@@ -11,10 +11,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -28,8 +30,6 @@ public class ProductConroller {
     private ProductService productService;
     private CategoryService categoryService;
 
-  //  @Autowired
-  //  private UserRepository userRepository; ///////////////////////////////////////////*/
 
     @Value("${upload.path}") // Существует ли директория для сохранения файлов. указываем спрингу что хотим получить переменную. Выдергивает из контекста значение
     private String uploadPath;
@@ -54,11 +54,6 @@ public class ProductConroller {
                                           @RequestParam(value = "word", required = false) String word,
                                           @RequestParam(value = "min", required = false) Double min,
                                           @RequestParam(value = "max", required = false) Double max){
-
-/*        if(principal !=null){
-            User user = userRepository.findUserByUsername(principal.getName());
-            System.out.println(user.getRoles());
-        }*/
 
         Specification<Product> spec = Specification.where(null);
         StringBuilder filters = new StringBuilder();
@@ -89,6 +84,7 @@ public class ProductConroller {
 
     @GetMapping("/edit/{id}")
     public String editProduct(Model model,  @PathVariable(value="id")Long id){
+
         model.addAttribute("product",productService.findProductById(id));
         model.addAttribute("categories",categoryService.getAllCategories());
         return "edit-product";
@@ -101,18 +97,32 @@ public class ProductConroller {
     }
     @GetMapping("/add")
     public String addProduct(Model model){
-        model.addAttribute("product", new Product());
+        model.addAttribute("product", new Product("toy.jpg"));
         model.addAttribute("categories",categoryService.getAllCategories());
         return "edit-product";
     }
 
 
     @PostMapping("/edit")
-    public String showEditProductForm(@ModelAttribute(value = "product")  Product product,
-                                      @RequestParam("file") MultipartFile file){
+    public String showEditProductForm( @RequestParam("file") MultipartFile file, Model model,
+                                       @Valid @ModelAttribute(value = "product")  Product product, BindingResult bindingResult
+                                     ){
+
+        if(bindingResult.hasErrors() ){
+/*            if ((file.isEmpty() ==true && product.getId()== null) || bindingResult.hasErrors()){
+                model.addAttribute("categories",categoryService.getAllCategories());
+                return "edit-product";
+            }
+            else if (file.isEmpty() ==false && product.getId()== null ){
+                product.
+            }*/
+            model.addAttribute("categories",categoryService.getAllCategories());
+            return "edit-product";
+        }
 
         String resultFilename = null;
-     if(file != null){
+
+     if(file.isEmpty() == false){
 
          File uploadDir = new File(uploadPath);
 
@@ -130,6 +140,8 @@ public class ProductConroller {
              e.printStackTrace();
          }
      }
+
+
         if (resultFilename == null){
             product.setPath_img(product.getPath_img());
         }
