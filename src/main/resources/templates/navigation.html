@@ -48,7 +48,7 @@
 
                 <li th:if="${#strings.contains(#authentication.getAuthorities(),'ADMIN')}" class="nav-item"
                     th:classappend="${activeTab == 'Orders' ? 'active' : ''}">
-                    <a class="nav-link" th:href="@{/order/allOrders/}">Заказы пользователей</a>
+                    <a class="nav-link" th:href="@{/orders/allOrders/}">Заказы пользователей</a>
                 </li>
 
                 <li sec:authorize="isAnonymous()" class="nav-item"
@@ -61,14 +61,6 @@
                         <input type="submit" class="btn btn-danger" value="Выйти"/>
                     </form>
                 </li>
-
-
-                <!--             <li th:if="${#authentication.isAuthenticated() == true}" class="nav-item">
-                                    <form th:action="@{/logout}" method="POST">
-                                        <input type="submit" class="btn btn-danger" value="Выйти"/>
-                                    </form>
-                                </li>-->
-
 
             </ul>
         </div>

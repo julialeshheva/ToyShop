@@ -68,6 +68,13 @@ public class UserController {
         return "user-order-details";
     }
 
+    @GetMapping("/userInfo/{username}")
+    public String showUserDetails(Model model, @PathVariable(value="username")String username){
+        model.addAttribute("user", userService.findUserByUsername(username));
+        return "user-details";
+    }
+
+
 
 
 

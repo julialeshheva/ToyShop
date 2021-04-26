@@ -4,27 +4,17 @@ package com.leshheva.toy.onlineshop.controllers;
 import com.leshheva.toy.onlineshop.entities.*;
 import com.leshheva.toy.onlineshop.service.*;
 import com.leshheva.toy.onlineshop.utils.OrderWrapper;
-import lombok.var;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
+
 
 @Controller
-//@RequestMapping("/order")
 public class OrderController {
 
     ShoppingCartService shoppingCartService;
@@ -72,15 +62,15 @@ public class OrderController {
         return "order-purchase";
     }
 
-/*@Secured(value = {"ADMIN"})*/
-    @GetMapping("order/allOrders")
+
+    @GetMapping("orders/allOrders")
     public String showAllOrders(Model model){
 
         model.addAttribute("orders", orderService.findAllOrders());
         return "orders-page";
     }
 
-    @GetMapping("/order/edit")
+    @GetMapping("/orders/edit")
     public String showOrdersForEdit(Model model) {
 
         List<Order> orders = new ArrayList<>();
@@ -90,8 +80,7 @@ public class OrderController {
         return "orders-edit";
     }
 
-
-    @PostMapping("/order/save")
+    @PostMapping("/orders/save")
     public String saveOrders(@ModelAttribute(value="wrappedOrders") OrderWrapper wrappedOrders, Model model) {
 
         List<Order> oldOrders = new ArrayList<>();
@@ -106,8 +95,10 @@ public class OrderController {
                       .forEach(oldOrder->oldOrder.setOrderStatus(order.getOrderStatus()));
         }
         orderService.saveOrders(oldOrders);
-        return "redirect:/order/allOrders";
+        return "redirect:/orders/allOrders";
     }
+
+
 
 
     @PostMapping("/order/buy")

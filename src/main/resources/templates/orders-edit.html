@@ -17,12 +17,12 @@
 
 <body>
 
-<div th:replace="~{navigation :: navi(Shop)}"/>
+<div th:replace="~{navigation :: navi(Orders)}"/>
 
 <div class="container">
 
     <br>
-    <form action="#" th:action="@{/order/save}" th:object="${wrappedOrders}" method="post">
+    <form action="#" th:action="@{/orders/save}" th:object="${wrappedOrders}" method="post">
         <fieldset>
             <input type="submit" id="submitButton" th:value="Save" class="btn btn-primary">
             <br>

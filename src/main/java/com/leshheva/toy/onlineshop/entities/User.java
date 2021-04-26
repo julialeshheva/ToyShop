@@ -27,7 +27,7 @@ public class User {
     private String firstName;
 
     @Column(name = "last_name")
-    private String last_name;
+    private String lastName;
 
     @Column(name = "email")
     private  String email;
@@ -46,11 +46,11 @@ public class User {
 
 
 
-    public User(String username, String password, String firstName, String last_name, String email, List<Role> roles) {
+    public User(String username, String password, String firstName, String lastName, String email, List<Role> roles) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
-        this.last_name = last_name;
+        this.lastName = lastName;
         this.email = email;
         this.roles = roles;
     }

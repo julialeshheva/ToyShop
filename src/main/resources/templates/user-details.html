@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="utf-8"/>
+
+    <title>Страница пользователя</title>
+
+    <link rel="icon" type="image/png" th:href="@{/favicon.ico}"/>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+    <meta name="ctx" th:content="${#httpServletRequest.getContextPath()}"/>
+</head>
+
+<body>
+
+<div th:replace="~{navigation :: navi(Orders)}" />
+
+<div class="container">
+    <br>
+    <h1>Страница пользователя</h1>
+    <div th:object="${user}">
+
+        <div class="form-row">
+            <div class="col form-group">
+                <label>Логин пользователя</label>
+                <input th:field="*{username}" type="text" class="form-control" th:rows="3" placeholder="" size="50" readonly>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="col form-group">
+                <label>Имя пользователя</label>
+                <input th:field="*{firstName}" type="text" class="form-control" th:rows="3" placeholder="" readonly>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col form-group">
+                <label>Фамилия пользователя</label>
+                <input th:field="*{lastName}" type="text" class="form-control" th:rows="3" placeholder="" readonly>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col form-group">
+                <label>E-mail</label>
+                <input th:field="*{email}" type="text" class="form-control" th:rows="3" placeholder="" readonly>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col form-group">
+                <label>Адрес доставки</label>
+                <input th:field="*{deliveryAddress}" type="text" class="form-control" th:rows="3" placeholder="" readonly>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col form-group">
+                <label>Номер телефона</label>
+                <input th:field="*{phoneNumber}" type="text" class="form-control" th:rows="3" placeholder="" readonly>
+            </div>
+        </div>
+
+    </div>
+</div>

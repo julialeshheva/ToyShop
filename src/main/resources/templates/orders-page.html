@@ -26,6 +26,7 @@
                 <thead>
                 <tr>
                     <th>Номер заказа</th>
+                    <th>Пользователь</th>
                     <th>Дата заказа</th>
                     <th>Дата доставки</th>
                     <th>Статус заказа</th>
@@ -38,6 +39,10 @@
                 <tbody>
                 <tr th:each="order : ${orders}">
                     <td th:text="${order.id}"/>
+                    <td >
+                        <a th:text="${order.user.username}" th:href="@{'/user/userInfo/' + ${order.user.getUsername()}}" />
+                    </td>
+
                     <td th:text="${#temporals.format(order.createAt, 'dd-MM-yyyy HH:mm')}"/>
                     <td th:text="${#temporals.format(order.deliveryDate, 'dd-MM-yyyy HH:mm')}"/>
                     <td th:text="${order.orderStatus.title}"/>
@@ -48,7 +53,7 @@
                 </tbody>
             </table>
     <br>
-    <a th:if="${#strings.contains(#authentication.getAuthorities(),'ADMIN')}"  th:href="@{/order/edit/}" class="btn btn-primary">Редактировать</a>
+    <a th:if="${#strings.contains(#authentication.getAuthorities(),'ADMIN')}"  th:href="@{/orders/edit/}" class="btn btn-primary">Редактировать</a>
 
 </div>
 
