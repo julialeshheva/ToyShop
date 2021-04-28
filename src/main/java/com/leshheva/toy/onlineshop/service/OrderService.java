@@ -7,6 +7,8 @@ import com.leshheva.toy.onlineshop.entities.User;
 import com.leshheva.toy.onlineshop.repositories.OrderRepository;
 import com.leshheva.toy.onlineshop.repositories.StatusRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -46,6 +48,10 @@ public class OrderService {
             orderItem.setOrder(order);
         }
         orderRepository.save(order);
+    }
+
+    public List<Order> findAllWithFiltering(Specification<Order> specification){
+        return orderRepository.findAll(specification,Sort.by("id") );
     }
 
     public List<Order> findOrderByUserId(User user) {

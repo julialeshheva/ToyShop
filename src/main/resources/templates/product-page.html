@@ -42,7 +42,6 @@
         <br>
         <a th:href="@{'/toys/cart/add/' + ${product.id}}" class="btn btn-primary">Добавить в корзину</a>
 
-        <a th:if="${#strings.contains(#authentication.getAuthorities(),'ADMIN')}"  th:href="@{'/toys/delete/' + ${product.id}}" class="btn btn-primary">Удалить продукт</a>
         <a th:if="${#strings.contains(#authentication.getAuthorities(),'ADMIN')}" th:href="@{'/toys/edit/' + ${product.id}}" class="btn btn-primary">Изменить продукт</a>
         <a th:if="${#strings.contains(#authentication.getAuthorities(),'ADMIN')}" th:href="@{'/toys/add'}" class="btn btn-primary">Добавить новый продукт</a>
     </div>

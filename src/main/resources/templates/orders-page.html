@@ -19,7 +19,13 @@
 
 <div th:replace="~{navigation :: navi(Orders)}"/>
 
-<div class="container">
+<div  class="container" >
+    <form th:action="@{/orders/allOrders}" method="get">
+        <label>Дата заказа от</label>
+        <input th:value="${date != null} ? ${date}" th:name="date" type="date" placeholder="Дата создания">
+        <input th:value="${min != null} ? ${min}" th:name="min" type="number"  placeholder="Минимальная цена заказа">
+        <button type="submit" class="btn btn-primary">Фильтровать</button>
+    </form>
 
     <br>
             <table class="table table-hover">

@@ -54,6 +54,7 @@ public class UserService implements UserDetailsService {
     }
 
     public User findUserByUsername(String name){
+
         return userRepository.findUserByUsername(name);
     }
 

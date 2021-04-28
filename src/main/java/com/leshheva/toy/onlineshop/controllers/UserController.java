@@ -47,9 +47,6 @@ public class UserController {
 
         User user = userService.findUserByUsername(principal.getName());
         List<Order> orders = orderService.findOrderByUserId(user);
-        //List<Product> products = new ArrayList<>();
-       // orders.stream().forEach(order -> order.getOrderItems().forEach(orderItem -> products.add(orderItem.getProduct())));
-      //  model.addAttribute("products", products);
         model.addAttribute("user", user);
         model.addAttribute("orders", orders);
 

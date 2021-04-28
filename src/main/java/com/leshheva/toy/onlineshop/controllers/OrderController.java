@@ -2,15 +2,25 @@ package com.leshheva.toy.onlineshop.controllers;
 
 
 import com.leshheva.toy.onlineshop.entities.*;
+import com.leshheva.toy.onlineshop.repositories.specifications.OrderSpecification;
+import com.leshheva.toy.onlineshop.repositories.specifications.ProductSpecification;
 import com.leshheva.toy.onlineshop.service.*;
 import com.leshheva.toy.onlineshop.utils.OrderWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -64,9 +74,22 @@ public class OrderController {
 
 
     @GetMapping("orders/allOrders")
-    public String showAllOrders(Model model){
+    public String showAllOrders(Model model, @RequestParam(value = "date", required = false) String date,
+                                             @RequestParam(value = "min", required = false) Double min){
 
-        model.addAttribute("orders", orderService.findAllOrders());
+        LocalDateTime localDateTime = null;
+        Specification<Order> spec = Specification.where(null);
+        model.addAttribute("date", date);
+        if (date != null & date !="") {
+           date = date + "T00:00";
+           localDateTime = LocalDateTime.parse(date);
+           spec = spec.and(OrderSpecification.creationDateGreaterThanOrEq(localDateTime));
+        }
+        if (min != null){
+            spec = spec.and(OrderSpecification.priceGreaterThanOrEq(min));
+        }
+        model.addAttribute("min", min);
+        model.addAttribute("orders", orderService.findAllWithFiltering(spec));
         return "orders-page";
     }
 

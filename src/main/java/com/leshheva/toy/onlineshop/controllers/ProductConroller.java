@@ -50,7 +50,7 @@ public class ProductConroller {
         return "product-page";
     }
     @GetMapping("/category/{id}")
-    public  String showProductsInCategory(Principal principal,Model model, @PathVariable(value="id")Long id, HttpServletRequest httpServletRequest,
+    public  String showProductsInCategory(Model model, @PathVariable(value="id") Long id, //@RequestParam(value = "category") Long id,//
                                           @RequestParam(value = "word", required = false) String word,
                                           @RequestParam(value = "min", required = false) Double min,
                                           @RequestParam(value = "max", required = false) Double max){
@@ -71,16 +71,16 @@ public class ProductConroller {
             spec = spec.and(ProductSpecification.priceLesserThanOrEq(max));
             filters.append("&max=" + max);
         }
-        model.addAttribute("products", productService.getListOfProductsCurrCategory(id));
-        model.addAttribute("filters", filters.toString());
-
+        spec = spec.and(ProductSpecification.categoryIdEquals(categoryService.getCategoryById(id)));
+        model.addAttribute("products", productService.getProductsWithFiltering(spec));
+        model.addAttribute("filters", null);
         model.addAttribute("min", min);
         model.addAttribute("max", max);
         model.addAttribute("word", word);
-        String referrer = httpServletRequest.getHeader("referer");
-        System.out.println(referrer);
+        model.addAttribute("category", categoryService.getCategoryById(id));
         return "products";
     }
+
 
     @GetMapping("/edit/{id}")
     public String editProduct(Model model,  @PathVariable(value="id")Long id){
@@ -89,12 +89,12 @@ public class ProductConroller {
         model.addAttribute("categories",categoryService.getAllCategories());
         return "edit-product";
     }
-    @GetMapping("/delete/{id}")
-    public String deleteProduct(Model model,  @PathVariable(value="id")Long id){
-        Long categoryId = productService.getProduct(id).getCategory().getId();
-        productService.deleteProductById(id);
-        return "redirect:/toys/category/"+categoryId;
-    }
+//    @GetMapping("/delete/{id}")
+//    public String deleteProduct(Model model,  @PathVariable(value="id")Long id){
+//        Long categoryId = productService.getProduct(id).getCategory().getId();
+//        productService.deleteProductById(id);
+//        return "redirect:/toys/category/"+categoryId;
+//    }
     @GetMapping("/add")
     public String addProduct(Model model){
         model.addAttribute("product", new Product("toy.jpg"));
@@ -109,13 +109,6 @@ public class ProductConroller {
                                      ){
 
         if(bindingResult.hasErrors() ){
-/*            if ((file.isEmpty() ==true && product.getId()== null) || bindingResult.hasErrors()){
-                model.addAttribute("categories",categoryService.getAllCategories());
-                return "edit-product";
-            }
-            else if (file.isEmpty() ==false && product.getId()== null ){
-                product.
-            }*/
             model.addAttribute("categories",categoryService.getAllCategories());
             return "edit-product";
         }
@@ -152,7 +145,5 @@ public class ProductConroller {
         Long categoryId = product.getCategory().getId();
         return "redirect:/toys/category/"+categoryId;
     }
-
-
 
 }
