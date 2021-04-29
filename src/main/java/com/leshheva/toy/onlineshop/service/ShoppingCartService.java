@@ -54,6 +54,17 @@ public class ShoppingCartService {
 
     }
 
+    public void removeProduct(Long id){
+        Product product =productService.getProduct(id);
+        OrderItem orderItem = orderItems.stream().filter(item->item.getProduct().equals(product)).findFirst().orElse(null);
+        if(orderItem.getQuantity()>1){
+            orderItem.setQuantity(orderItem.getQuantity()-1);
+            orderItem.setTotalPrice(orderItem.getTotalPrice()-product.getPrice());
+        }else {
+            orderItems.remove(orderItem);
+        }
+    }
+
     public Double totalOrderPrice(){
         Double totalPrice = 0.0;
         for (OrderItem item: orderItems

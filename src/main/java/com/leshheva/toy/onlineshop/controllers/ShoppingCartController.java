@@ -32,8 +32,15 @@ public class ShoppingCartController {
     public String addProductToCart(@PathVariable("id") Long id, HttpServletRequest httpServletRequest) {
         shoppingCart.add(id);
         String referrer = httpServletRequest.getHeader("referer");
-        System.out.println(referrer);
         return "redirect:" + referrer;
+    }
+
+    @GetMapping("/remove/{id}")
+    public String removeProductFromCart(@PathVariable("id") Long id, HttpServletRequest httpServletRequest) {
+       shoppingCart.removeProduct(id);
+        String referrer = httpServletRequest.getHeader("referer");
+
+        return "redirect:/toys/cart/";
     }
 
 }
