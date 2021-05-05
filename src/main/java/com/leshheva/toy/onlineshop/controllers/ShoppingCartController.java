@@ -1,6 +1,8 @@
 package com.leshheva.toy.onlineshop.controllers;
 
+import antlr.StringUtils;
 import com.leshheva.toy.onlineshop.service.ShoppingCartService;
+import com.leshheva.toy.onlineshop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,6 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.security.Principal;
 
 @Controller
 @RequestMapping("toys/cart")
@@ -20,7 +24,6 @@ public class ShoppingCartController {
     public void setShoppingCartService(ShoppingCartService shoppingCart) {
         this.shoppingCart = shoppingCart;
     }
-
     @GetMapping
     public String cartPage(Model model) {
         model.addAttribute("cart", shoppingCart.getOrderItems());

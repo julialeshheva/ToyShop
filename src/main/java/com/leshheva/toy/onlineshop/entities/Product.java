@@ -46,4 +46,10 @@ public class Product {
     public Product(String path_img) {
         this.path_img = path_img;
     }
+
+    public Product(Long id, @NotNull(message = "Введите название продукта") @Size(min = 2, max = 100, message = "Название должно быть от 2 до 100 символов") String title, @DecimalMin(value = "10.01", message = "минимальное значение 10") @Digits(integer = 10, fraction = 2) @NotNull(message = "Цена не должна быть пустой") Double price) {
+        this.id = id;
+        this.title = title;
+        this.price = price;
+    }
 }

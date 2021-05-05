@@ -27,11 +27,11 @@ import java.util.List;
 @Controller
 public class OrderController {
 
-    ShoppingCartService shoppingCartService;
-    ProductService productService;
-    OrderService orderService;
-    UserService userService;
-    OrderStatusService orderStatusService;
+    private ShoppingCartService shoppingCartService;
+    private ProductService productService;
+    private OrderService orderService;
+    private UserService userService;
+    private OrderStatusService orderStatusService;
 
     @Autowired
     public void setShoppingCartService(ShoppingCartService shoppingCartService) {
@@ -120,9 +120,6 @@ public class OrderController {
         orderService.saveOrders(oldOrders);
         return "redirect:/orders/allOrders";
     }
-
-
-
 
     @PostMapping("/order/buy")
     public String registrateOrder(Principal principal) {

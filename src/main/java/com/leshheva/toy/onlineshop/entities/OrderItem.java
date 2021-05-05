@@ -1,10 +1,12 @@
 package com.leshheva.toy.onlineshop.entities;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Data
+@NoArgsConstructor
 @Entity
 @Table(name="orders_item")
 public class OrderItem {
@@ -31,4 +33,11 @@ public class OrderItem {
     @JoinColumn(name = "order_id")
     private Order order;
 
+    public OrderItem(Long id, Long quantity, Double itemPrice, Double totalPrice, Product product) {
+        this.id = id;
+        this.quantity = quantity;
+        this.itemPrice = itemPrice;
+        this.totalPrice = totalPrice;
+        this.product = product;
+    }
 }

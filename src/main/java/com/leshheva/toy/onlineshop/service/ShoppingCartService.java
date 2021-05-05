@@ -2,6 +2,7 @@ package com.leshheva.toy.onlineshop.service;
 
 import com.leshheva.toy.onlineshop.entities.OrderItem;
 import com.leshheva.toy.onlineshop.entities.Product;
+import com.leshheva.toy.onlineshop.entities.User;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -10,7 +11,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.WebApplicationContext;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Data
@@ -19,7 +22,7 @@ import java.util.List;
 public class ShoppingCartService {
 
     private ProductService productService;
-    List<OrderItem> orderItems;
+    private List<OrderItem> orderItems;
 
 
     @Autowired
@@ -47,10 +50,6 @@ public class ShoppingCartService {
            orderItem.setTotalPrice(product.getPrice()*orderItem.getQuantity());
 
        }
-        for (OrderItem item: orderItems
-        ) {
-            System.out.println(item.getProduct().getTitle()+" Total price "+item.getTotalPrice()+" Kolvo " + item.getQuantity());
-        }
 
     }
 
