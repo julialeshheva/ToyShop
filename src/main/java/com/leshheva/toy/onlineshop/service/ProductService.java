@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public class ProductService {
 
-    ProductRepository productRepository;
+    private ProductRepository productRepository;
 
     @Autowired
     public void setProductRepository(ProductRepository productRepository) {

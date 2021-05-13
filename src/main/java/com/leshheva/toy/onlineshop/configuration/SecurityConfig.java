@@ -23,18 +23,12 @@ import javax.sql.DataSource;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private UserService userService;
-    private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+
 
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
     }
-
-    @Autowired
-    public void setCustomAuthenticationSuccessHandler(CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler) {
-        this.customAuthenticationSuccessHandler = customAuthenticationSuccessHandler;
-    }
-
 
     @Override // хотим использовать свой собственный authenticationProvider
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -43,8 +37,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
-
 
        http.authorizeRequests()
 

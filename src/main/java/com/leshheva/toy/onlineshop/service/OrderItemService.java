@@ -11,13 +11,9 @@ import java.util.List;
 @Service
 public class OrderItemService {
 
-    OrderItemRepository orderItemRepository;
+    private OrderItemRepository orderItemRepository;
     @Autowired
     public void setOrderItemRepository(OrderItemRepository orderItemRepository) {
         this.orderItemRepository = orderItemRepository;
     }
-
-/*    public List<Product> getListOfProductsByOrderId(List<Order> orders){
-      // return orderItemRepository.findAllByOrderInOrderById(orders);
-    }*/
 }

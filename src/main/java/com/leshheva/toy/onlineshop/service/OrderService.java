@@ -20,8 +20,8 @@ import java.util.stream.Collectors;
 @Service
 public class OrderService {
 
-    OrderRepository orderRepository;
-    StatusRepository statusRepository;
+    private OrderRepository orderRepository;
+    private StatusRepository statusRepository;
 
 
     @Autowired

@@ -33,8 +33,8 @@ public class OrderItem {
     @JoinColumn(name = "order_id")
     private Order order;
 
-    public OrderItem(Long id, Long quantity, Double itemPrice, Double totalPrice, Product product) {
-        this.id = id;
+    public OrderItem( Long quantity, Double itemPrice, Double totalPrice, Product product) {
+
         this.quantity = quantity;
         this.itemPrice = itemPrice;
         this.totalPrice = totalPrice;

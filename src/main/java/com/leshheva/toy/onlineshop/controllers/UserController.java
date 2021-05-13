@@ -22,9 +22,9 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
 
-    OrderService orderService;
-    UserService userService;
-    OrderItemService orderItemService;
+    private OrderService orderService;
+    private UserService userService;
+    private OrderItemService orderItemService;
 
 
     @Autowired

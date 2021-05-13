@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface StatusRepository extends JpaRepository<OrderStatus,Long> {
     @Query("SELECT s FROM OrderStatus s WHERE s.title = ?1")
-    OrderStatus findByTitle(@Param("status")String status);
+    OrderStatus findByTitle(String status);
 
 }

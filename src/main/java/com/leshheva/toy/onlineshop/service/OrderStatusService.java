@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 public class OrderStatusService {
-    StatusRepository orderStatusRepository;
+    private StatusRepository orderStatusRepository;
 
     @Autowired
     public void setOrderStatusRepository(StatusRepository orderStatusRepository) {
