@@ -3,7 +3,6 @@ package com.leshheva.toy.onlineshop.controllers;
 
 import com.leshheva.toy.onlineshop.entities.*;
 import com.leshheva.toy.onlineshop.repositories.specifications.OrderSpecification;
-import com.leshheva.toy.onlineshop.repositories.specifications.ProductSpecification;
 import com.leshheva.toy.onlineshop.service.*;
 import com.leshheva.toy.onlineshop.utils.OrderWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,14 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -94,14 +87,27 @@ public class OrderController {
     }
 
     @GetMapping("/orders/edit")
-    public String showOrdersForEdit(Model model) {
+    public String showOrdersForEdit(Model model,
+                                    @RequestParam(value = "orderId", required = false) Long orderId) {
 
         List<Order> orders = new ArrayList<>();
-        orderService.findAllOrders().iterator().forEachRemaining(orders::add);
+        if (orderId != null){
+            Order order = orderService.findOrderById(orderId);
+            if (order == null){
+                orderService.findAllOrders().iterator().forEachRemaining(orders::add);
+            } else{
+                orders.add(order);
+                model.addAttribute("orderId", order.getId());
+            }
+        }
+        else{
+            orderService.findAllOrders().iterator().forEachRemaining(orders::add);
+        }
         model.addAttribute("wrappedOrders", new OrderWrapper(orders));
         model.addAttribute("statuses", orderStatusService.findAllStatuses());
         return "orders-edit";
     }
+
 
     @PostMapping("/orders/save")
     public String saveOrders(@ModelAttribute(value="wrappedOrders") OrderWrapper wrappedOrders, Model model) {
@@ -124,7 +130,7 @@ public class OrderController {
     @PostMapping("/order/buy")
     public String registrateOrder(Principal principal) {
         User user = userService.findUserByUsername(principal.getName());
-        orderService.createOrder(user, shoppingCartService.getOrderItems(), shoppingCartService.totalOrderPrice());
+        orderService.saveNewOrder(user, shoppingCartService.getOrderItems(), shoppingCartService.totalOrderPrice());
         return "redirect:/user/orders/" + user.getUsername();
     }
 

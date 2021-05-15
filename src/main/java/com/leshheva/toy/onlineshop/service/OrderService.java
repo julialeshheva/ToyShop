@@ -20,8 +20,8 @@ import java.util.stream.Collectors;
 @Service
 public class OrderService {
 
-    private OrderRepository orderRepository;
-    private StatusRepository statusRepository;
+    OrderRepository orderRepository;
+    StatusRepository statusRepository;
 
 
     @Autowired
@@ -33,9 +33,8 @@ public class OrderService {
         this.statusRepository = statusRepository;
     }
 
-    public void createOrder(User user, List<OrderItem> orderItemList, Double orderPrice){
+    private Order createOrder(User user, List<OrderItem> orderItemList, Double orderPrice){
         Order order = new Order();
-
         order.setId(0L);
         order.setUser(user);
         order.setOrderItems(orderItemList);
@@ -47,6 +46,11 @@ public class OrderService {
              ) {
             orderItem.setOrder(order);
         }
+        return order;
+    }
+
+    public void saveNewOrder(User user, List<OrderItem> orderItemList, Double orderPrice){
+        Order order = createOrder(user, orderItemList, orderPrice);
         orderRepository.save(order);
     }
 

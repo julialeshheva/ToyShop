@@ -21,11 +21,16 @@
 
 <div class="container">
 
+    <form th:action="@{'/orders/edit'}" method="get">
+        <input th:value="${orderId != null} ? ${orderId}" th:name="orderId" type="number" placeholder="Номер заказа">
+        <button type="submit" class="btn btn-primary">Поиск</button>
+    </form>
     <br>
     <form action="#" th:action="@{/orders/save}" th:object="${wrappedOrders}" method="post">
         <fieldset>
             <input type="submit" id="submitButton" th:value="Save" class="btn btn-primary">
             <br>
+
             <table class="table table-hover">
                 <thead>
                 <tr>
